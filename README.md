@@ -1,13 +1,20 @@
 # sunmi_printer
 
-Support Sunmi V2 Pro Label Version and Null Safety.
-I build this flutter plugin based on this
+this is copy of [sunmi_printer](https://pub.dev/packages/sunmi_printer)
+i add some method in it 
+add `getFontSize()` method  
+add `setFontBold()` method 
+add `printBarcode()` method 
+
+Support Sunmi V2 Pro and Sunmi V2S Label Version and Null Safety.
+build flutter plugin based on this
 [Official Sunmi Inner Printer Doc](https://file.cdn.sunmi.com/SUNMIDOCS/%E5%95%86%E7%B1%B3%E5%86%85%E7%BD%AE%E6%89%93%E5%8D%B0%E6%9C%BA%E5%BC%80%E5%8F%91%E8%80%85%E6%96%87%E6%A1%A3EN-0224.pdf). But not all method from doc is included in this plugins. I am only select few of important method which is important for my personal usecase only.
 
 ## Installation  
 
 ```bash
-flutter pub add sunmi_printer
+flutter pub add sunmi_printer // from dev.pub flutter old plugin
+then fatch this repo to folder (.pub-cache/hosted/pub.dev/sunmi_printer-1.0.4)
 ```
 
 ## Tested Devices
@@ -101,7 +108,16 @@ await SunmiPrinter.exitTransactionPrint();
 await SunmiPrinter.startLabelPrint();
 // Set whatever alignment u like
 await SunmiPrinter.setAlignment(PrintAlign.CENTER); 
-await SunmiPrinter.printImage(img); // Note: img variable must convert 
+ await SunmiPrinter.setFontSize(20);
+await SunmiPrinter.setFontBold(true);
+await SunmiPrinter.printText('Price: 120');
+await SunmiPrinter.printBarcode(
+        code: '345678908765, // sample barcode
+        barcodeType: 8,
+        textPosition: 1,
+        width: 1,
+        height: 50,
+      );
 // remember to exit the label mode after finish printing.
 await SunmiPrinter.exitLabelPrint(); 
 ```
@@ -110,20 +126,22 @@ await SunmiPrinter.exitLabelPrint();
 
 ```dart
 // get the last index
-int lastIndex = imgURLList.length - 1;
+int lastIndex = priceList.length - 1;
 
-await Future.forEach(imgURLList, (String url) async {
+await Future.forEach(priceList, (String data) async {
     // Enter into the label mode
     await SunmiPrinter.startLabelPrint();
-
-    // Start your label content
-    int index = imgURLList.indexOf(url);
-    // example images from internet
-    String url = 'https://pngimg.com/uploads/nike/small/nike_PNG18.png';
-      // convert image to Uint8List format
-    Uint8List byte = (await NetworkAssetBundle(Uri.parse(url)).load(url)).buffer.asUint8List();
-
-    await SunmiPrinter.printImage(bytes);
+int index = priceList.indexOf(data);
+   await SunmiPrinter.setFontSize(20);
+await SunmiPrinter.setFontBold(true);
+await SunmiPrinter.printText('Price: $data');
+await SunmiPrinter.printBarcode(
+        code: '345678908765, // sample barcode
+        barcodeType: 8,
+        textPosition: 1,
+        width: 1,
+        height: 50,
+      );
     // END your label content
 
     // check if last item
@@ -190,6 +208,4 @@ enum PrinterMode {
 
 add `getPrinterPaper()` method  
 add `getPrinterSerialNo()` method  
-add `setFontSize()` method  
-add `printBarCode()` method  
 add `printQRCode()` method  
