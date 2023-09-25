@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.tanzigang.sunmi_printer">
+  <queries>
+      <package android:name="woyou.aidlservice.jiuiv5" />
+    </queries>
+</manifest>
