@@ -22,6 +22,7 @@ then fatch this repo to folder (.pub-cache/hosted/pub.dev/sunmi_printer-1.0.4)
 ```bash
 Sunmi V2 Pro 
 Sunmi V2 Pro (Label Version)
+Sunmi V2S
 ```
 
 ## Getting Started
