@@ -2,20 +2,22 @@ group 'com.tanzigang.sunmi_printer'
 version '1.0'
 
 buildscript {
+    ext.kotlin_version = "1.8.22"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath("com.android.tools.build:gradle:8.1.4")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
      gradle.projectsEvaluated {
@@ -29,12 +31,18 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 16
+        if (project.android.hasProperty('namespace')) {
+            namespace 'com.tanzigang.sunmi_printer'
+        }
     }
     lintOptions {
         disable 'InvalidPackage'
+    }
+    buildFeatures {
+        aidl true
     }
 }
